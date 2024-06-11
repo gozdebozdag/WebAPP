@@ -1,0 +1,30 @@
+﻿@using DemoApi.Models
+@model List<Urunler>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>UrunId</th>
+            <th>MarkaId</th>
+            <th>GrupId</th>
+            <th>UreticiId</th>
+            <th>UrunKodu</th>
+            <th>UrunAdi</th>
+            <!-- Diğer sütunlar -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var urun in Model)
+        {
+            <tr>
+                <td>@urun.UrunId</td>
+                <td>@urun.MarkaId</td>
+                <td>@urun.GrupId</td>
+                <td>@urun.UreticiId</td>
+                <td>@urun.UrunKodu</td>
+                <td>@urun.UrunAdi</td>
+                <!-- Diğer sütunlar -->
+            </tr>
+        }
+    </tbody>
+</table>

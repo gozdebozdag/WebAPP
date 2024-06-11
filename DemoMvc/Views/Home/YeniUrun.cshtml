@@ -1,0 +1,14 @@
+﻿@using DemoApi.Models
+@model Urunler
+
+<h1>Yeni Ürün Ekle</h1>
+
+<form asp-action="YeniUrun" method="post">
+    <div>
+        <label for="Isim">İsim:</label>
+        <input type="text" id="Isim" name="Isim" value="@Model.UrunAdi" />
+    </div>
+    <button type="submit">Kaydet</button>
+</form>
+
+<a href="@Url.Action("Urunler")">Geri</a>

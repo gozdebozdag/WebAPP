@@ -1,0 +1,13 @@
+﻿@using DemoApi.Models
+@model Urunler
+
+<h1>Ürün Sil</h1>
+
+<p>Bu ürünü silmek istediğinize emin misiniz?</p>
+
+<form asp-action="UrunSil" method="post">
+    <input type="hidden" name="id" value="@Model.UrunId" />
+    <button type="submit">Sil</button>
+</form>
+
+<a href="@Url.Action("Urunler")">Geri</a>

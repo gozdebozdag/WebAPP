@@ -1,0 +1,10 @@
+﻿@using DemoApi.Models
+@model Urunler
+
+<h1>Ürün Detayları</h1>
+
+<p>ID: @Model.UrunId</p>
+<p>İsim: @Model.UrunAdi</p>
+<p>İsim: @Model.UreticiId</p>
+
+<a href="@Url.Action("Urunler")">Geri</a>
