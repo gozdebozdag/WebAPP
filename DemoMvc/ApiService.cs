@@ -66,7 +66,7 @@ public class ApiServices
     public async Task<List<Dictionary<string, string>>> GetUrunlerWithMarkaAsync()
     {
         var response = await _httpClient.GetAsync("api/Urunler/GetUrunlerWithMarka");
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)     
         {
             var data = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(data);
