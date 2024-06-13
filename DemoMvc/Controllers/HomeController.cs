@@ -22,11 +22,7 @@ namespace DemoMvc.Controllers
             return View(/*urunler*/);
         }
 
-        public async Task<IActionResult> UrunlerWithMarka()
-        {
-            List<Urunler> urunlerWithMarka = await _apiService.GetUrunlerWithMarkaAsync();
-            return View(urunlerWithMarka);
-        }
+        
 
 
         public async Task<IActionResult> UrunDetay(int id)
