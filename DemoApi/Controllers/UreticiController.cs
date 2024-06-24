@@ -49,7 +49,7 @@ namespace DemoApi.Controllers
             }
         }
 
-        [HttpPut("UpdateUretici")]
+        [HttpPut("UpdateUretici")] 
         public ActionResult UpdateUretici(UrunUretici uretici)
         {
             using (IDbConnection con = new SqlConnection(SqlStr))
