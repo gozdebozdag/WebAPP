@@ -1,16 +1,16 @@
 ﻿@using DemoApi.Models
 @model List<Urunler>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
-            <th>UrunId</th>
-            <th>MarkaId</th>
-            <th>GrupId</th>
-            <th>UreticiId</th>
-            <th>UrunKodu</th>
-            <th>UrunAdi</th>
-            <th></th>
+            <th scope="col">UrunId</th>
+            <th scope="col">MarkaId</th>
+            <th scope="col">GrupId</th>
+            <th scope="col">UreticiId</th>
+            <th scope="col">UrunKodu</th>
+            <th scope="col">UrunAdi</th>
+            <th scope="col">Detay</th>
             <!-- Diğer sütunlar -->
         </tr>
     </thead>
@@ -24,7 +24,9 @@
                 <td>@urun.UreticiId</td>
                 <td>@urun.UrunKodu</td>
                 <td>@urun.UrunAdi</td>
-                <td><a class="btn btn-primary" href="@Url.Action("UrunDetay", "Home", new { id = urun.UrunId })">Detay</a></td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("UrunDetay", "Home", new { id = urun.UrunId })">Detay</a>
+                </td>
                 <!-- Diğer sütunlar -->
             </tr>
         }
