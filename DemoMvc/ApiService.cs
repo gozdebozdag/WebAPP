@@ -22,7 +22,7 @@ public class ApiServices
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-    public async Task<List<Urunler>> GetProductsAsync()
+    public async Task<List<Urunler>> GetProducts()
     {
         List<Urunler> products = new List<Urunler>();
 
@@ -63,5 +63,5 @@ public class ApiServices
         response.EnsureSuccessStatusCode();
     }
 
-
+    
 }

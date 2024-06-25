@@ -10,6 +10,7 @@
             <th>UreticiId</th>
             <th>UrunKodu</th>
             <th>UrunAdi</th>
+            <th></th>
             <!-- Diğer sütunlar -->
         </tr>
     </thead>
@@ -23,6 +24,7 @@
                 <td>@urun.UreticiId</td>
                 <td>@urun.UrunKodu</td>
                 <td>@urun.UrunAdi</td>
+                <td><a class="btn btn-primary" href="@Url.Action("UrunDetay", "Home", new { id = urun.UrunId })">Detay</a></td>
                 <!-- Diğer sütunlar -->
             </tr>
         }

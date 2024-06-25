@@ -5,7 +5,7 @@ namespace DemoApi.Services
     public interface IProductService
     {
         IEnumerable<Urunler> GetAllProducts();
-        List<Dictionary<string, string>> GetUrunlerWithMarka();
+        Urunler GetProduct(Urunler product);
         Urunler GetProductById(int id);
         void AddProduct(Urunler product);
         void UpdateProduct(Urunler product);

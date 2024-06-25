@@ -54,11 +54,6 @@ namespace DemoApi.Controllers
             return Ok(new { message = "Product deleted successfully" });
         }
 
-        [HttpGet("GetUrunlerWithMarka")]
-        public ActionResult GetUrunlerWithMarka()
-        {
-            var urunlerWithMarka = _productService.GetUrunlerWithMarka();
-            return Ok(urunlerWithMarka);
-        }
+      
     }
 }

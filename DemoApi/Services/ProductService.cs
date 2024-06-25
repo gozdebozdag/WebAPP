@@ -15,33 +15,18 @@ namespace DemoApi.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public List<Dictionary<string, string>> GetUrunlerWithMarka()
+        public Urunler GetProduct(int id)
         {
-            var urunlerWithMarka = new List<Dictionary<string, string>>();
-
-            using (var connection = new SqlConnection(_connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                var query = "SELECT u.UrunAdi, m.Marka FROM Urunler u INNER JOIN Markalar m ON m.MarkaId = u.MarkaId";
-                var command = new SqlCommand(query, connection);
-
-                connection.Open();
-                using (var reader = command.ExecuteReader())
+                var product = con.Query<Urunler>("SELECT * FROM Urunler WHERE Id = @Id", new { Id = id }).FirstOrDefault();
+                if (product == null)
                 {
-                    while (reader.Read())
-                    {
-                        var item = new Dictionary<string, string>
-                    {
-                        { "UrunAdi", reader["UrunAdi"].ToString() },
-                        { "Marka", reader["Marka"].ToString() }
-                    };
-                        urunlerWithMarka.Add(item);
-                    }
+                    throw new KeyNotFoundException("Product not found.");
                 }
+                return product;
             }
-
-            return urunlerWithMarka;
         }
-
         public IEnumerable<Urunler> GetAllProducts()
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
@@ -85,6 +70,11 @@ namespace DemoApi.Services
             {
                 con.Execute("DELETE FROM Urunler WHERE UrunId = @Id", new { Id = id });
             }
+        }
+
+        public Urunler GetProduct(Urunler product)
+        {
+            throw new NotImplementedException();
         }
     }
 }
