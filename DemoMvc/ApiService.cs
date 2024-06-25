@@ -63,5 +63,17 @@ public class ApiServices
         response.EnsureSuccessStatusCode();
     }
 
-    
+    /*---------------------- Urun Grupları ------------*/
+    public async Task<List<UrunGruplari>> GetGrups()
+    {
+        List<UrunGruplari> gruplar = new List<UrunGruplari>();
+
+        HttpResponseMessage response = await _httpClient.GetAsync("api/Grup/GetGrups");
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonString = await response.Content.ReadAsStringAsync();
+            gruplar = JsonConvert.DeserializeObject<List<UrunGruplari>>(jsonString);
+        }
+        return gruplar;
+    }
 }
