@@ -47,9 +47,13 @@ namespace DemoMvc.Controllers
             return View(yeniUrun);
         }
 
-        public async Task<IActionResult> UrunDuzenle(int id)
+         public async Task<IActionResult> UrunDuzenle(int id)
         {
             Urunler urun = await _apiService.GetProductByIdAsync(id);
+            if (urun == null)
+            {
+                return NotFound();
+            }
             return View(urun);
         }
 
@@ -58,8 +62,12 @@ namespace DemoMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _apiService.UpdateProductAsync(urun);
-                return RedirectToAction("Urunler");
+                var success = await _apiService.UpdateProductAsync(urun);
+                if (success)
+                {
+                    return RedirectToAction("Urunler");
+                }
+                ModelState.AddModelError(string.Empty, "Ürün güncelleme iþlemi baþarýsýz");
             }
             return View(urun);
         }

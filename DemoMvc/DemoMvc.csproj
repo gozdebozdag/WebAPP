@@ -10,4 +10,8 @@
     <ProjectReference Include="..\DemoApi\DemoApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Uretici\" />
+  </ItemGroup>
+
 </Project>

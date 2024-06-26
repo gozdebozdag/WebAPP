@@ -4,11 +4,53 @@
 <h1>Ürün Düzenle</h1>
 
 <form asp-action="UrunDuzenle" method="post">
-    <div>
-        <label for="Isim">İsim:</label>
-        <input type="text" id="Isim" name="Isim" value="@Model.UrunAdi" />
-    </div>
-    <button type="submit">Kaydet</button>
+    <table class="table">
+        <tr>
+            <td>
+                <label for="MarkaId">Marka ID:</label>
+            </td>
+            <td>
+                <input type="number" id="MarkaId" name="MarkaId" value="@Model.MarkaId" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="GrupId">Grup ID:</label>
+            </td>
+            <td>
+                <input type="number" id="GrupId" name="GrupId" value="@Model.GrupId" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="UreticiId">Üretici ID:</label>
+            </td>
+            <td>
+                <input type="number" id="UreticiId" name="UreticiId" value="@Model.UreticiId" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="UrunKodu">Ürün Kodu:</label>
+            </td>
+            <td>
+                <input type="text" id="UrunKodu" name="UrunKodu" value="@Model.UrunKodu" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="UrunAdi">İsim:</label>
+            </td>
+            <td>
+                <input type="text" id="UrunAdi" name="UrunAdi" value="@Model.UrunAdi" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </td>
+        </tr>
+    </table>
 </form>
 
-<a href="@Url.Action("Urunler")">Geri</a>
+<a href="@Url.Action("Urunler")" class="btn btn-secondary mt-3">Geri</a>

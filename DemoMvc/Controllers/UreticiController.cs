@@ -3,21 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoMvc.Controllers
 {
-    public class MarkaController : Controller
+    public class UreticiController : Controller
     {
         private readonly ApiServices _apiService;
 
-        public MarkaController(ApiServices apiService)
+        public UreticiController(ApiServices apiService)
         {
             _apiService = apiService;
         }
 
-       
 
-        public async Task<IActionResult> Markalar()
+
+        public async Task<IActionResult> Ureticiler()
         {
-            List<Markalar> markalar = await _apiService.GetAllMarkalar();
+            List<UrunUretici> markalar = await _apiService.GetUreticiler();
             return View(markalar);
         }
     }
 }
+

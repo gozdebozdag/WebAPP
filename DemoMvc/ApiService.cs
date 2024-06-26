@@ -8,6 +8,7 @@ using DemoApi.Models;
 using DemoMvc.Models;
 using Newtonsoft.Json;
 using Markalar = DemoApi.Models.Markalar;
+using UrunUretici = DemoApi.Models.UrunUretici;
 
 public class ApiServices
 {
@@ -52,11 +53,12 @@ public class ApiServices
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task UpdateProductAsync(Urunler urun)
+    public async Task<bool> UpdateProductAsync(Urunler urun)
     {
-        var content = new StringContent(JsonConvert.SerializeObject(urun), Encoding.UTF8, "application/json");
+        var json = JsonConvert.SerializeObject(urun);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await _httpClient.PutAsync("api/Urun/UpdateProduct", content);
-        response.EnsureSuccessStatusCode();
+        return response.IsSuccessStatusCode;
     }
 
     public async Task DeleteProductAsync(int id)
@@ -87,7 +89,7 @@ public class ApiServices
 
     /*---------------------- Markalar ------------*/
 
-    public async Task<List<Markalar>> GetMarkalar()
+    public async Task<List<Markalar>> GetAllMarkalar()
     {
         var response = await _httpClient.GetAsync("api/Marka/GetBrands");
 
@@ -102,4 +104,23 @@ public class ApiServices
             return new List<Markalar>();
         }
     }
+
+    /*---------------------- Ureticiler ------------*/
+
+    public async Task<List<UrunUretici>> GetUreticiler()
+    {
+        var response = await _httpClient.GetAsync("api/Uretici/GetUreticiler");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var ureticiler = JsonConvert.DeserializeObject<List<UrunUretici>>(json);
+            return ureticiler;
+        }
+        else
+        {
+            return new List<UrunUretici>();
+        }
+    }
+
 }
