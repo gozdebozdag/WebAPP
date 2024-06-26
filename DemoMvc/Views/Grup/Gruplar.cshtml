@@ -1,21 +1,20 @@
-﻿@using DemoApi.Models
-@model List<UrunGruplari>
+﻿@model List<DemoApi.Models.UrunGruplari>
+
+<h2>Gruplar</h2>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Grup İsmi</th>
             <th>GrupId</th>
-            
+            <th>Grup</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var grup in Model)
         {
             <tr>
-                <td>@grup.Grup</td>
                 <td>@grup.GrupId</td>
-                
+                <td>@grup.Grup</td>
             </tr>
         }
     </tbody>

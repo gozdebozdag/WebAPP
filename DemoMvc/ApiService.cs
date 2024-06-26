@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DemoApi.Models;
 using DemoMvc.Models;
 using Newtonsoft.Json;
+using Markalar = DemoApi.Models.Markalar;
 
 public class ApiServices
 {
@@ -16,12 +17,13 @@ public class ApiServices
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:7271/") // API'nin adresi ve portu buraya yazılmalı
+            BaseAddress = new Uri("https://localhost:7271/") 
         };
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
+    /*---------------------- Urunler ------------*/
     public async Task<List<Urunler>> GetProducts()
     {
         List<Urunler> products = new List<Urunler>();
@@ -71,9 +73,33 @@ public class ApiServices
         HttpResponseMessage response = await _httpClient.GetAsync("api/Grup/GetGrups");
         if (response.IsSuccessStatusCode)
         {
-            var jsonString = await response.Content.ReadAsStringAsync();
-            gruplar = JsonConvert.DeserializeObject<List<UrunGruplari>>(jsonString);
+            var json = await response.Content.ReadAsStringAsync();
+            gruplar = JsonConvert.DeserializeObject<List<UrunGruplari>>(json);
+     
         }
+        else
+        {
+            return new List<UrunGruplari>();
+        }
+
         return gruplar;
+    }
+
+    /*---------------------- Markalar ------------*/
+
+    public async Task<List<Markalar>> GetMarkalar()
+    {
+        var response = await _httpClient.GetAsync("api/Marka/GetBrands");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var markalar = JsonConvert.DeserializeObject<List<Markalar>>(json);
+            return markalar;
+        }
+        else
+        {
+            return new List<Markalar>();
+        }
     }
 }
