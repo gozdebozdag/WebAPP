@@ -21,7 +21,5 @@ namespace DemoApi.Services
                 return con.Query<UrunGruplari>("SELECT * FROM UrunGruplari").ToList();
             }
         }
-
-        
     }
 }
