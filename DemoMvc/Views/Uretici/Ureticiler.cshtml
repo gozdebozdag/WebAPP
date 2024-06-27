@@ -1,0 +1,21 @@
+﻿@model List<DemoApi.Models.UrunUretici>
+
+<h2>Gruplar</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Uretici Id</th>
+            <th>Uretici</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var uretici in Model)
+        {
+            <tr>
+                <td>@uretici.UreticiId</td>
+                <td>@uretici.Uretici</td>
+            </tr>
+        }
+    </tbody>
+</table>

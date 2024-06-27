@@ -11,6 +11,7 @@
             <th scope="col">UrunKodu</th>
             <th scope="col">UrunAdi</th>
             <th scope="col">Güncelle</th>
+            <th scope="col">Sil</th>
             <th scope="col">Detay</th>
             <!-- Diğer sütunlar -->
         </tr>
@@ -27,6 +28,9 @@
                 <td>@urun.UrunAdi</td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="@Url.Action("UrunDuzenle", "Home", new { id = urun.UrunId })">Güncelle</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("UrunSil", "Home", new { id = urun.UrunId })">Sil</a>
                 </td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="@Url.Action("UrunDetay", "Home", new { id = urun.UrunId })">Detay</a>

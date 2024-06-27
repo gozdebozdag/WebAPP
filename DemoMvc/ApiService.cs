@@ -55,9 +55,7 @@ public class ApiServices
 
     public async Task<bool> UpdateProductAsync(Urunler urun)
     {
-        var json = JsonConvert.SerializeObject(urun);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PutAsync("api/Urun/UpdateProduct", content);
+        var response = await _httpClient.PutAsJsonAsync("api/Urun/UpdateProduct", urun);
         return response.IsSuccessStatusCode;
     }
 

@@ -47,15 +47,15 @@ namespace DemoMvc.Controllers
             return View(yeniUrun);
         }
 
-         public async Task<IActionResult> UrunDuzenle(int id)
-        {
+          public async Task<IActionResult> UrunDuzenle(int id)
+          {
             Urunler urun = await _apiService.GetProductByIdAsync(id);
             if (urun == null)
             {
                 return NotFound();
             }
             return View(urun);
-        }
+           }
 
         [HttpPost]
         public async Task<IActionResult> UrunDuzenle(Urunler urun)

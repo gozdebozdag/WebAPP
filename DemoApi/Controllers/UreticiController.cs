@@ -85,11 +85,5 @@ namespace DemoApi.Controllers
             }
         }
 
-        public class UrunUretici
-        {
-            public int UreticiId { get; set; }
-            public string Uretici { get; set; }
-        }
-
     }
 }
