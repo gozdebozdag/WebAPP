@@ -4,11 +4,23 @@
 <h1>Yeni Ürün Ekle</h1>
 
 <form asp-action="YeniUrun" method="post">
-    <div>
-        <label for="Isim">İsim:</label>
-        <input type="text" id="Isim" name="Isim" value="@Model.UrunAdi" />
+    <div class="form-group">
+        <label asp-for="UrunAdi" class="control-label"></label>
+        <input asp-for="UrunAdi" class="form-control" />
+        <span asp-validation-for="UrunAdi" class="text-danger"></span>
     </div>
-    <button type="submit">Kaydet</button>
+    <div class="form-group">
+        <label asp-for="MarkaId" class="control-label"></label>
+        <input asp-for="MarkaId" class="form-control" />
+        <span asp-validation-for="MarkaId" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+        <br />
+        <input type="submit" value="Kaydet" class="btn btn-primary" />
+    </div>
 </form>
 
-<a href="@Url.Action("Urunler")">Geri</a>
+<div>
+    <a asp-action="Urunler">Geri Dön</a>
+</div>
