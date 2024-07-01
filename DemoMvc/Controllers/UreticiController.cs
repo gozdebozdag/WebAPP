@@ -16,8 +16,8 @@ namespace DemoMvc.Controllers
 
         public async Task<IActionResult> Ureticiler()
         {
-            List<UrunUretici> markalar = await _apiService.GetUreticiler();
-            return View(markalar);
+            List<UrunUretici> uretici = await _apiService.GetUreticiler();
+            return View(uretici);
         }
     }
 }

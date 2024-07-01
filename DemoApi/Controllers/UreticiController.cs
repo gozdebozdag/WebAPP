@@ -27,8 +27,7 @@ namespace DemoApi.Controllers
             {
                 ureticiler = con.Query<UrunUretici>("SELECT * FROM UrunUretici").ToList();
             }
-            string json = JsonConvert.SerializeObject(ureticiler, Formatting.Indented);
-            return Ok(json);
+            return Json(ureticiler);
         }
 
         [HttpPost("AddUretici")]

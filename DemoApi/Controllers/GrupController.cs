@@ -27,8 +27,7 @@ namespace DemoApi.Controllers
             {
                 gruplar = con.Query<UrunGruplari>("SELECT * FROM UrunGruplari").ToList();
             }
-            string json = JsonConvert.SerializeObject(gruplar);
-            return Ok(json);
+            return Json(gruplar);
         }
 
         [HttpPost("AddGrup")]

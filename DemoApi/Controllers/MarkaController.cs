@@ -27,8 +27,7 @@ namespace DemoApi.Controllers
             {
                 markalar = con.Query<Markalar>("SELECT * FROM Markalar").ToList();
             }
-            string json = JsonConvert.SerializeObject(markalar, Formatting.Indented);
-            return Ok(json);
+            return Json(markalar);
         }
 
         [HttpPost("AddBrand")]
