@@ -3,6 +3,6 @@
     public class UrunUretici
     {
         public int UreticiId { get; set; }
-        public string Uretici { get;}
+        public string Uretici { get; set; }
     }
 }

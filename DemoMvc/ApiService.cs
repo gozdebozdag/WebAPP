@@ -65,9 +65,9 @@ public class ApiServices
         response.EnsureSuccessStatusCode();
     }
 
-    /*---------------------- Urun Grupları ------------*/
-    public async Task<List<UrunGruplari>> GetGrups()
-    {
+        /*---------------------- Urun Grupları ------------*/
+        public async Task<List<UrunGruplari>> GetGrups()
+        {
         List<UrunGruplari> gruplar = new List<UrunGruplari>();
 
         HttpResponseMessage response = await _httpClient.GetAsync("api/Grup/GetGrups");
@@ -86,23 +86,63 @@ public class ApiServices
     }
 
     /*---------------------- Markalar ------------*/
+    public async Task<List<Markalar>> GetBrands()
+    {
+        List<Markalar> brands = new List<Markalar>();
+
+        HttpResponseMessage response = await _httpClient.GetAsync("api/Marka/GetBrands");
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonString = await response.Content.ReadAsStringAsync();
+            brands = JsonConvert.DeserializeObject<List<Markalar>>(jsonString);
+        }
+        return brands;
+    }
+
+    public async Task<Markalar> GetBrandByIdAsync(int id)
+    {
+        var response = await _httpClient.GetAsync($"api/Marka/GetBrand/{id}");
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<Markalar>(content);
+    }
+
+    public async Task AddBrandAsync(Markalar marka)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(marka), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/Marka/AddBrand", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<bool> UpdateBrandAsync(Markalar marka)
+    {
+        var response = await _httpClient.PutAsJsonAsync("api/Marka/UpdateBrand", marka);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task DeleteBrandAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"api/Marka/DeleteBrand/{id}");
+        response.EnsureSuccessStatusCode();
+    }
 
     public async Task<List<Markalar>> GetAllMarkalar()
     {
-        var response = await _httpClient.GetAsync("api/Marka/GetBrands");
+        List<Markalar> brands = new List<Markalar>();
 
+        HttpResponseMessage response = await _httpClient.GetAsync("api/Marka/GetBrands");
         if (response.IsSuccessStatusCode)
         {
-            var json = response.Content.ReadAsStringAsync().Result;
-            var markalar = JsonConvert.DeserializeObject<List<Markalar>>(json);
-            return markalar;
+            var json = await response.Content.ReadAsStringAsync();
+            brands = JsonConvert.DeserializeObject<List<Markalar>>(json);
         }
         else
         {
             return new List<Markalar>();
         }
-    }
 
+        return brands;
+    }
     /*---------------------- Ureticiler ------------*/
 
     public async Task<List<UrunUretici>> GetUreticiler()

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using Dapper;
 using DemoApi.Models;
+using DemoApi.Services;
 
 namespace DemoApi.Controllers
 {
@@ -13,10 +14,28 @@ namespace DemoApi.Controllers
     {
         private readonly string SqlStr = "Data Source=192.168.1.17;Persist Security Info=True;Initial Catalog=Gozde;User ID=sefa;Password=sefa123;Connection Timeout=300";
         private readonly ILogger<MarkaController> _logger;
+        private readonly IMarkaService _markaService;
 
+        public MarkaController(IMarkaService markaService)
+        {
+            _markaService = markaService;
+        }
         public MarkaController(ILogger<MarkaController> logger)
         {
             _logger = logger;
+        }
+        [HttpGet("GetBrand/{id}")]
+        public ActionResult GetBrandById(int id)
+        {
+            using (IDbConnection con = new SqlConnection(SqlStr))
+            {
+                var brand = con.Query<Urunler>("SELECT * FROM Markalar WHERE Id = @Id", new { Id = id }).FirstOrDefault();
+                if (brand == null)
+                {
+                    throw new KeyNotFoundException("Brands not found.");
+                }
+                return Ok(brand);
+            }
         }
 
         [HttpGet("GetBrands")]
