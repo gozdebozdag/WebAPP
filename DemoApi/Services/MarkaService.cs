@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 using System.Data;
 using DemoApi.Models;
 using Dapper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DemoApi.Services
 {
@@ -16,7 +15,7 @@ namespace DemoApi.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        IEnumerable<Markalar> IMarkaService.GetAllMarkalar()
+        public IEnumerable<Markalar> GetAllBrands()
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
@@ -24,24 +23,16 @@ namespace DemoApi.Services
             }
         }
 
-        public Urunler GetBrands(int id)
-        {
-            using (IDbConnection con = new SqlConnection(_connectionString))
-            {
-                var brand = con.Query<Urunler>("SELECT * FROM Markalar WHERE Id = @Id", new { Id = id }).FirstOrDefault();
-                if (brand == null)
-                {
-                    throw new KeyNotFoundException("Brands not found.");
-                }
-                return brand;
-            }
-        }
-
         public Markalar GetBrandById(int id)
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                return con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE MarkaId = @Id", new { Id = id });
+                var brand = con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE MarkaId = @Id", new { Id = id });
+                if (brand == null)
+                {
+                    throw new KeyNotFoundException("Brand not found.");
+                }
+                return brand;
             }
         }
 
@@ -49,8 +40,7 @@ namespace DemoApi.Services
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                var query = @"INSERT INTO Markalar (MarkaId,Marka) 
-                              VALUES (@MarkaId, @Marka)";
+                var query = @"INSERT INTO Markalar (Marka) VALUES (@Marka)";
                 con.Execute(query, marka);
             }
         }
@@ -59,8 +49,7 @@ namespace DemoApi.Services
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                var query = @"UPDATE Markalar SET MarkaId = @MarkaId, Marka = @Marka
-                              WHERE MarkaId = @MarkaId";
+                var query = @"UPDATE Markalar SET Marka = @Marka WHERE MarkaId = @MarkaId";
                 con.Execute(query, marka);
             }
         }
@@ -72,13 +61,5 @@ namespace DemoApi.Services
                 con.Execute("DELETE FROM Markalar WHERE MarkaId = @Id", new { Id = id });
             }
         }
-
-        public Markalar GetBrands(Markalar marka)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
-    
 }

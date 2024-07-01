@@ -4,8 +4,7 @@ namespace DemoApi.Services
 {
     public interface IMarkaService
     {
-        IEnumerable<Markalar> GetAllMarkalar();
-        Markalar GetBrands(Markalar marka);
+        IEnumerable<Markalar> GetAllBrands();
         Markalar GetBrandById(int id);
         void AddBrand(Markalar marka);
         void UpdateBrand(Markalar marka);
