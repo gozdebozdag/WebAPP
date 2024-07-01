@@ -93,7 +93,7 @@ public class ApiServices
 
         if (response.IsSuccessStatusCode)
         {
-            var json = await response.Content.ReadAsStringAsync();
+            var json = response.Content.ReadAsStringAsync().Result;
             var markalar = JsonConvert.DeserializeObject<List<Markalar>>(json);
             return markalar;
         }
