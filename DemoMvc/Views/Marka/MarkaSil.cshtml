@@ -1,0 +1,13 @@
+﻿@using DemoApi.Models
+@model DemoApi.Models.Markalar
+
+<h1>Ürün Sil</h1>
+
+<p>Bu ürünü silmek istediğinize emin misiniz?</p>
+
+<form asp-action="MarkaSil" method="post">
+    <input type="hidden" name="id" value="@Model.MarkaId" />
+    <button type="submit">Sil</button>
+</form>
+
+<a href="@Url.Action("Markalar")">Geri</a>

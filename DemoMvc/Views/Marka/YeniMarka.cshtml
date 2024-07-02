@@ -1,0 +1,26 @@
+﻿@using DemoApi.Models
+@model DemoApi.Models.Markalar
+
+<h1>Yeni Ürün Ekle</h1>
+
+<form asp-action="YeniMarka" method="post">
+    <div class="form-group">
+        <label asp-for="Marka" class="control-label"></label>
+        <input asp-for="Marka" class="form-control" />
+        <span asp-validation-for="Marka" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MarkaId" class="control-label"></label>
+        <input asp-for="MarkaId" class="form-control" />
+        <span asp-validation-for="MarkaId" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+        <br />
+        <input type="submit" value="Kaydet" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Markalar">Geri Dön</a>
+</div>

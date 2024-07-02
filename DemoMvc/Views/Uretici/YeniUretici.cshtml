@@ -1,0 +1,26 @@
+﻿@using DemoApi.Models
+@model DemoApi.Models.UrunUretici
+
+<h1>Yeni Üretici Ekle</h1>
+
+<form asp-action="YeniUretici" method="post">
+    <div class="form-group">
+        <label asp-for="Uretici" class="control-label"></label>
+        <input asp-for="Uretici" class="form-control" />
+        <span asp-validation-for="Uretici" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UreticiId" class="control-label"></label>
+        <input asp-for="UreticiId" class="form-control" />
+        <span asp-validation-for="UreticiId" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+        <br />
+        <input type="submit" value="Kaydet" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Ureticiler">Geri Dön</a>
+</div>
