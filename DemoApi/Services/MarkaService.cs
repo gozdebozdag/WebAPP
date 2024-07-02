@@ -14,42 +14,12 @@ namespace DemoApi.Services
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-
-        public IEnumerable<Markalar> GetAllBrands()
-        {
-            using (IDbConnection con = new SqlConnection(_connectionString))
-            {
-                return con.Query<Markalar>("SELECT * FROM Markalar").ToList();
-            }
-        }
-
-        public Markalar GetBrandById(int id)
-        {
-            using (IDbConnection con = new SqlConnection(_connectionString))
-            {
-                var brand = con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE MarkaId = @Id", new { Id = id });
-                if (brand == null)
-                {
-                    throw new KeyNotFoundException("Brand not found.");
-                }
-                return brand;
-            }
-        }
-
         public void AddBrand(Markalar marka)
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                var query = @"INSERT INTO Markalar (Marka) VALUES (@Marka)";
-                con.Execute(query, marka);
-            }
-        }
-
-        public void UpdateBrand(Markalar marka)
-        {
-            using (IDbConnection con = new SqlConnection(_connectionString))
-            {
-                var query = @"UPDATE Markalar SET Marka = @Marka WHERE MarkaId = @MarkaId";
+                var query = @"INSERT INTO Markalar (MarkaId, Marka) 
+                              VALUES (@MarkaId, @Marka)";
                 con.Execute(query, marka);
             }
         }
@@ -59,6 +29,40 @@ namespace DemoApi.Services
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute("DELETE FROM Markalar WHERE MarkaId = @Id", new { Id = id });
+            }
+        }
+
+        public IEnumerable<Markalar> GetAllBrands()
+        {
+            using (IDbConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Markalar>("SELECT * FROM Markalar").ToList();
+            }
+        }
+
+        public Markalar GetBrand(Markalar marka)
+        {
+            using (IDbConnection con = new SqlConnection(_connectionString))
+            {
+                return con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE Marka = @Marka", new { Marka = marka.Marka });
+            }
+        }
+
+        public Markalar GetBrandById(int id)
+        {
+            using (IDbConnection con = new SqlConnection(_connectionString))
+            {
+                return con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE UrunId = @Id", new { Id = id });
+            }
+        }
+
+        public void UpdateBrand(Markalar marka)
+        {
+            using (IDbConnection con = new SqlConnection(_connectionString))
+            {
+                var query = @"UPDATE Markalar SET MarkaId = @MarkaId, Marka = @Marka
+                              WHERE MarkaId = @MarkaId";
+                con.Execute(query, marka);
             }
         }
     }

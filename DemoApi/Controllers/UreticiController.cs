@@ -29,6 +29,19 @@ namespace DemoApi.Controllers
             }
             return Json(ureticiler);
         }
+        [HttpGet("GetUreticiler/{id}")]
+        public ActionResult GetUreticiler(int id)
+        {
+            using (IDbConnection con = new SqlConnection(SqlStr))
+            {
+                var uretici = con.Query<UrunUretici>("SELECT * FROM UrunUretici WHERE UreticiId = @Id", new { Id = id }).FirstOrDefault();
+                if (uretici == null)
+                {
+                    throw new KeyNotFoundException(" not found.");
+                }
+                return Json(uretici);
+            }
+        }
 
         [HttpPost("AddUretici")]
         public ActionResult AddUretici(UrunUretici uretici)

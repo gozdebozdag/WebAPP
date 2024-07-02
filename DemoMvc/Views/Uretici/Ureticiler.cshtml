@@ -2,11 +2,14 @@
 
 <h2>Gruplar</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
             <th>Uretici Id</th>
             <th>Uretici</th>
+            <th scope="col">Güncelle</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Detay</th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +18,15 @@
             <tr>
                 <td>@uretici.UreticiId</td>
                 <td>@uretici.Uretici</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("UreticiDuzenle", "Uretici", new { id = uretici.UreticiId })">Güncelle</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("UreticiSil", "Uretici", new { id = uretici.UreticiId })">Sil</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("UreticiDetay", "Uretici", new { id = uretici.UreticiId })">Detay</a>
+                </td>
             </tr>
         }
     </tbody>

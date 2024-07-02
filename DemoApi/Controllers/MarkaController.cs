@@ -19,11 +19,11 @@ namespace DemoApi.Controllers
             _markaService = markaService;
         }
 
-        [HttpGet("GetBrands")]
+        [HttpGet("GetBrand")]
         public ActionResult GetBrand()
         {
             var brands = _markaService.GetAllBrands();
-            return Ok(brands);
+            return Json(brands);
         }
 
         [HttpGet("GetBrand/{id}")]

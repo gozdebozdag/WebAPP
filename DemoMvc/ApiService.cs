@@ -161,4 +161,31 @@ public class ApiServices
         }
     }
 
+    public async Task<UrunUretici> GetUreticiByIdAsync(int id)
+    {
+        var response = await _httpClient.GetAsync($"api/Uretici/GetUreticiler/{id}");
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<UrunUretici>(content);
+    }
+
+    public async Task AddUreticiAsync(UrunUretici uretici)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(uretici), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/Uretici/AddUretici", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<bool> UpdateUreticiAsync(UrunUretici uretici)
+    {
+        var response = await _httpClient.PutAsJsonAsync("api/Uretici/UpdateUretici", uretici);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task DeleteUreticiAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"api/Uretici/DeleteUretici/{id}");
+        response.EnsureSuccessStatusCode();
+    }
+
 }
