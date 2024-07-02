@@ -30,6 +30,20 @@ namespace DemoApi.Controllers
             return Json(gruplar);
         }
 
+        [HttpGet("GetGrups/{id}")]
+        public ActionResult GetGrupById(int id)
+        {
+           
+            using (IDbConnection con = new SqlConnection(SqlStr))
+            {
+                var gruplar = con.Query<UrunGruplari>("SELECT * FROM UrunGruplari where GrupId= @Id", new { Id = id }).FirstOrDefault();
+                if (gruplar == null)
+                {
+                    throw new KeyNotFoundException(" not found.");
+                }
+                return Json(gruplar);
+            }
+        }
         [HttpPost("AddGrup")]
         public ActionResult AddGrup(UrunGruplari grup)
         {

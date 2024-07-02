@@ -22,10 +22,6 @@ namespace DemoMvc.Controllers
             List<Urunler> urunler = await _apiService.GetProducts();
             return View(urunler);
         }
-
-        
-
-
         public async Task<IActionResult> UrunDetay(int id)
         {
             Urunler urun = await _apiService.GetProductByIdAsync(id);

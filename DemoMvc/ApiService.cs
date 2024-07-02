@@ -18,7 +18,7 @@ public class ApiServices
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:7271/") 
+            BaseAddress = new Uri("https://localhost:7271/")
         };
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -65,9 +65,9 @@ public class ApiServices
         response.EnsureSuccessStatusCode();
     }
 
-        /*---------------------- Urun Grupları ------------*/
-        public async Task<List<UrunGruplari>> GetGrups()
-        {
+    /*---------------------- Urun Grupları ------------*/
+    public async Task<List<UrunGruplari>> GetGrups()
+    {
         List<UrunGruplari> gruplar = new List<UrunGruplari>();
 
         HttpResponseMessage response = await _httpClient.GetAsync("api/Grup/GetGrups");
@@ -75,7 +75,7 @@ public class ApiServices
         {
             var json = await response.Content.ReadAsStringAsync();
             gruplar = JsonConvert.DeserializeObject<List<UrunGruplari>>(json);
-     
+
         }
         else
         {
@@ -83,6 +83,32 @@ public class ApiServices
         }
 
         return gruplar;
+    }
+    public async Task<UrunGruplari> GetGrupByIdAsync(int id)
+    {
+        var response = await _httpClient.GetAsync($"api/Grup/GetGrupById/{id}");
+        response.EnsureSuccessStatusCode();
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<UrunGruplari>(content);
+    }
+
+    public async Task AddGrupAsync(UrunGruplari grup)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(grup), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/Grup/AddGrup", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<bool> UpdateGrupAsync(UrunGruplari grup)
+    {
+        var response = await _httpClient.PutAsJsonAsync("api/Grup/UpdateGrup", grup);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task DeleteGrupAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"api/Grup/DeleteGrup/{id}");
+        response.EnsureSuccessStatusCode();
     }
 
     /*---------------------- Markalar ------------*/

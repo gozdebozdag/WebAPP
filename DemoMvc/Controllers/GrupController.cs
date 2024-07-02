@@ -22,5 +22,58 @@ namespace DemoMvc.Controllers
             List<UrunGruplari> gruplar = await _apiService.GetGrups();
             return View(gruplar);
         }
+
+        public async Task<IActionResult> GrupDetay(int id)
+        {
+            UrunGruplari grup = await _apiService.GetGrupByIdAsync(id);
+            return View(grup);
+        }
+
+        public IActionResult YeniGrup()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> YeniGrup(UrunGruplari yenigrup)
+        {
+            if (ModelState.IsValid)
+            {
+                await _apiService.AddGrupAsync(yenigrup);
+                return RedirectToAction("Gruplar");
+            }
+            return View(yenigrup);
+        }
+
+        public async Task<IActionResult> GrupDuzenle(int id)
+        {
+            UrunGruplari grup = await _apiService.GetGrupByIdAsync(id);
+            if (grup == null)
+            {
+                return NotFound();
+            }
+            return View(grup);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GrupDuzenle(UrunGruplari grup)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _apiService.UpdateGrupAsync(grup);
+                if (success)
+                {
+                    return RedirectToAction("Gruplar");
+                }
+                ModelState.AddModelError(string.Empty, "Ürün güncelleme işlemi başarısız");
+            }
+            return View(grup);
+        }
+
+        public async Task<IActionResult> GrupSil(int id)
+        {
+            await _apiService.DeleteGrupAsync(id);
+            return RedirectToAction("Gruplar");
+        }
     }
 }

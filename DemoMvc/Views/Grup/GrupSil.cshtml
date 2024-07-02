@@ -1,0 +1,13 @@
+﻿@using DemoApi.Models
+@model DemoApi.Models.UrunGruplari
+
+<h1>Grup Sil</h1>
+
+<p>Bu grubu silmek istediğinize emin misiniz?</p>
+
+<form asp-action="GrupSil" method="post">
+    <input type="hidden" name="id" value="@Model.GrupId" />
+    <button type="submit">Sil</button>
+</form>
+
+<a href="@Url.Action("Gruplar")">Geri</a>

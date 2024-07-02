@@ -1,0 +1,26 @@
+﻿@using DemoApi.Models
+@model DemoApi.Models.UrunGruplari
+
+<h1>Yeni Grup Ekle</h1>
+
+<form asp-action="YeniGrup" method="post">
+    <div class="form-group">
+        <label asp-for="Grup" class="control-label"></label>
+        <input asp-for="Grup" class="form-control" />
+        <span asp-validation-for="Grup" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GrupId" class="control-label"></label>
+        <input asp-for="GrupId" class="form-control" />
+        <span asp-validation-for="GrupId" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+        <br />
+        <input type="submit" value="Kaydet" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Gruplar">Geri Dön</a>
+</div>
