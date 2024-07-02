@@ -86,11 +86,12 @@ public class ApiServices
     }
 
     /*---------------------- Markalar ------------*/
-    public async Task<List<Markalar>> GetBrands()
+
+    public async Task<List<Markalar>> GetBrand()
     {
         List<Markalar> brands = new List<Markalar>();
 
-        HttpResponseMessage response = await _httpClient.GetAsync("api/Marka/GetBrands");
+        HttpResponseMessage response = await _httpClient.GetAsync("api/Marka/GetBrand");
         if (response.IsSuccessStatusCode)
         {
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -130,7 +131,7 @@ public class ApiServices
     {
         List<Markalar> brands = new List<Markalar>();
 
-        HttpResponseMessage response = await _httpClient.GetAsync("api/Marka/GetBrands");
+        HttpResponseMessage response = await _httpClient.GetAsync("api/Marka/GetBrand");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();

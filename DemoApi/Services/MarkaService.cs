@@ -40,19 +40,11 @@ namespace DemoApi.Services
             }
         }
 
-        public Markalar GetBrand(Markalar marka)
-        {
-            using (IDbConnection con = new SqlConnection(_connectionString))
-            {
-                return con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE Marka = @Marka", new { Marka = marka.Marka });
-            }
-        }
-
         public Markalar GetBrandById(int id)
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                return con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE UrunId = @Id", new { Id = id });
+                return con.QueryFirstOrDefault<Markalar>("SELECT * FROM Markalar WHERE MarkaId = @Id", new { Id = id });
             }
         }
 

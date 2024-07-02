@@ -14,19 +14,6 @@ namespace DemoApi.Services
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-
-        public Urunler GetProduct(int id)
-        {
-            using (IDbConnection con = new SqlConnection(_connectionString))
-            {
-                var product = con.Query<Urunler>("SELECT * FROM Urunler WHERE Id = @Id", new { Id = id }).FirstOrDefault();
-                if (product == null)
-                {
-                    throw new KeyNotFoundException("Product not found.");
-                }
-                return product;
-            }
-        }
         public IEnumerable<Urunler> GetAllProducts()
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
@@ -70,11 +57,6 @@ namespace DemoApi.Services
             {
                 con.Execute("DELETE FROM Urunler WHERE UrunId = @Id", new { Id = id });
             }
-        }
-
-        public Urunler GetProduct(Urunler product)
-        {
-            throw new NotImplementedException();
         }
     }
 }

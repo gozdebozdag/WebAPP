@@ -16,7 +16,7 @@ namespace DemoMvc.Controllers
 
         public async Task<IActionResult> Markalar()
         {
-            List<Markalar> markalar = await _apiService.GetAllMarkalar();
+            List<Markalar> markalar = await _apiService.GetBrand();
             return View(markalar);
         }
 

@@ -1,10 +1,9 @@
 ﻿@using DemoApi.Models
-@model Urunler
+@model DemoApi.Models.Markalar
 
-<h1>Ürün Detayları</h1>
+<h1>Marka Detayları</h1>
 
-<p>ID: @Model.UrunId</p>
-<p>İsim: @Model.UrunAdi</p>
-<p>İsim: @Model.UreticiId</p>
+<p>ID: @Model.MarkaId</p>
+<p>İsim: @Model.Marka</p>
 
-<a href="@Url.Action("Urunler")">Geri</a>
+<a href="@Url.Action("Markalar")">Geri</a>

@@ -9,6 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IMarkaService, MarkaService>();
+builder.Services.AddScoped<IGrupService, GrupService>();
+builder.Services.AddScoped<IUreticiService, UreticiService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

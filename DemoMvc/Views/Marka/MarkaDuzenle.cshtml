@@ -1,0 +1,27 @@
+﻿@using DemoApi.Models
+@model DemoApi.Models.Markalar
+
+<h1>Marka Düzenle</h1>
+
+<form asp-action="MarkaDuzenle" method="post">
+    <table class="table">
+        <tr>
+            <td>
+                <label for="MarkaId">Marka ID:</label>
+            </td>
+            <td>
+                <input type="number" id="MarkaId" name="MarkaId" value="@Model.MarkaId" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Marka">Marka:</label>
+            </td>
+            <td>
+                <input type="number" id="Marka" name="GrupId" value="@Model.Marka" class="form-control" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<a href="@Url.Action("Markalar")" class="btn btn-secondary mt-3">Geri</a>
