@@ -61,7 +61,6 @@ namespace DemoMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                // `grup.GrupId`'yi `id` parametresi ile eşleştiriyoruz
                 grup.GrupId = id;
 
                 var success = await _apiService.UpdateGrupAsync(grup);

@@ -1,37 +1,21 @@
 ﻿@using DemoApi.Models
-@model Urunler
+@model DemoApi.Models.Urunler
 
 <h1>Ürün Düzenle</h1>
-
-<form asp-action="UrunDuzenle" method="post">
+<form id="urunDuzenleForm">
+    <input type="hidden" id="UrunId" name="UrunId" value="@Model.UrunId" />
     <table class="table">
         <tr>
             <td>
-                <label for="MarkaId">Marka ID:</label>
+                <label for="UrunAdi">Ürün:</label>
             </td>
             <td>
-                <input type="number" id="MarkaId" name="MarkaId" value="@Model.MarkaId" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="GrupId">Grup ID:</label>
-            </td>
-            <td>
-                <input type="number" id="GrupId" name="GrupId" value="@Model.GrupId" class="form-control" />
+                <input type="text" id="UrunAdi" name="UrunAdi" value="@Model.UrunAdi" class="form-control" />
             </td>
         </tr>
         <tr>
             <td>
-                <label for="UreticiId">Üretici ID:</label>
-            </td>
-            <td>
-                <input type="number" id="UreticiId" name="UreticiId" value="@Model.UreticiId" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="UrunKodu">Ürün Kodu:</label>
+                <label for="UrunKodu">Urun Kodu:</label>
             </td>
             <td>
                 <input type="text" id="UrunKodu" name="UrunKodu" value="@Model.UrunKodu" class="form-control" />
@@ -39,10 +23,34 @@
         </tr>
         <tr>
             <td>
-                <label for="UrunAdi">İsim:</label>
+                <label for="UreticiId">Uretici: </label>
             </td>
             <td>
-                <input type="text" id="UrunAdi" name="UrunAdi" value="@Model.UrunAdi" class="form-control" />
+                <input type="text" id="UreticiId" name="UreticiId" value="@Model.UreticiId" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="GrupId">Grup: </label>
+            </td>
+            <td>
+                <input type="text" id="GrupId" name="GrupId" value="@Model.GrupId" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Kdv">Kdv: </label>
+            </td>
+            <td>
+                <input type="text" id="Kdv" name="Kdv" value="@Model.Kdv" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="MarkaId">Marka: </label>
+            </td>
+            <td>
+                <input type="text" id="MarkaId" name="MarkaId" value="@Model.MarkaId" class="form-control" />
             </td>
         </tr>
         <tr>
@@ -54,3 +62,38 @@
 </form>
 
 <a href="@Url.Action("Urunler")" class="btn btn-secondary mt-3">Geri</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#urunDuzenleForm').on('submit', function (event) {
+            event.preventDefault();
+
+            var formData = {
+                UrunId: $('#UrunId').val(),
+                UrunAdi: $('#UrunAdi').val(),
+                UrunKodu: $('#UrunKodu').val(),
+                UreticiId: $('#UreticiId').val(),
+                MarkaId: $('#MarkaId').val(),
+                GrupId: $('#GrupId').val(),
+                Kdv: $('#Kdv').val()
+            };
+
+            $.ajax({
+                url: '/Home/UrunDuzenle/' + formData.UrunId,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    // Success handler
+                    console.log(response);
+                    window.location.href = '/Home/Urunler'; // Redirect on success
+                },
+                error: function (error) {
+                    // Error handler
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>

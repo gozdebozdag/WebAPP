@@ -55,10 +55,12 @@ namespace DemoMvc.Controllers
            }
 
         [HttpPost]
-        public async Task<IActionResult> UrunDuzenle(Urunler urun)
+        [Route("Home/UrunDuzenle/{id}")]
+        public async Task<IActionResult> UrunDuzenle([FromBody]Urunler urun,int id)
         {
             if (ModelState.IsValid)
             {
+                urun.UrunId = id;
                 var success = await _apiService.UpdateProductAsync(urun);
                 if (success)
                 {
