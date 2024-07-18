@@ -1,6 +1,10 @@
 ﻿@using DemoApi.Models
 @model List<Urunler>
 
+<h2>Ürünler</h2>
+
+
+
 <table class="table table-striped table-bordered">
     <thead class="thead-dark">
         <tr>
@@ -40,4 +44,4 @@
         }
     </tbody>
 </table>
-<a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("YeniUrun", "Home")">Ürün Ekle</a>
+<a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("YeniUrun", "Home")">Yeni Ürün Ekle</a>

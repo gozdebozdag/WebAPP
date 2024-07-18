@@ -1,26 +1,69 @@
-﻿@using DemoApi.Models
-@model Urunler
+﻿@model DemoApi.Models.Urunler
 
 <h1>Yeni Ürün Ekle</h1>
 
 <form asp-action="YeniUrun" method="post">
-    <div class="form-group">
-        <label asp-for="UrunAdi" class="control-label"></label>
-        <input asp-for="UrunAdi" class="form-control" />
-        <span asp-validation-for="UrunAdi" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MarkaId" class="control-label"></label>
-        <input asp-for="MarkaId" class="form-control" />
-        <span asp-validation-for="MarkaId" class="text-danger"></span>
-    </div>
-   
-    <div class="form-group">
-        <br />
-        <input type="submit" value="Kaydet" class="btn btn-primary" />
-    </div>
+    <table class="table">
+        <tr>
+            <td>
+                <label asp-for="UrunAdi">Ürün:</label>
+            </td>
+            <td>
+                <input asp-for="UrunAdi" class="form-control" required />
+                <span asp-validation-for="UrunAdi" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="UrunKodu">Ürün Kodu:</label>
+            </td>
+            <td>
+                <input asp-for="UrunKodu" class="form-control" />
+                <span asp-validation-for="UrunKodu" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="UreticiId">Üretici ID:</label>
+            </td>
+            <td>
+                <input asp-for="UreticiId" class="form-control" type="number" />
+                <span asp-validation-for="UreticiId" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="GrupId">Grup ID:</label>
+            </td>
+            <td>
+                <input asp-for="GrupId" class="form-control" type="number" />
+                <span asp-validation-for="GrupId" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="Kdv">KDV:</label>
+            </td>
+            <td>
+                <input asp-for="Kdv" class="form-control" />
+                <span asp-validation-for="Kdv" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="MarkaId">Marka ID:</label>
+            </td>
+            <td>
+                <input asp-for="MarkaId" class="form-control" type="number" />
+                <span asp-validation-for="MarkaId" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </td>
+        </tr>
+    </table>
 </form>
 
-<div>
-    <a asp-action="Urunler">Geri Dön</a>
-</div>
+<a asp-action="Urunler" class="btn btn-secondary mt-3">Geri</a>
