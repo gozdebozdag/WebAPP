@@ -2,8 +2,7 @@
 @model DemoApi.Models.UrunGruplari
 
 <h1>Grup Düzenle</h1>
-
-<form asp-action="GrupDuzenle" method="post">
+<form id="grupDuzenleForm">
     <input type="hidden" id="GrupId" name="GrupId" value="@Model.GrupId" />
     <table class="table">
         <tr>
@@ -21,5 +20,37 @@
         </tr>
     </table>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#grupDuzenleForm').on('submit', function(event) {
+            event.preventDefault();
+
+            var formData = {
+                GrupId: $('#GrupId').val(),
+                Grup: $('#Grup').val()
+            };
+
+            $.ajax({
+                url: '/Grup/GrupDuzenle/' + formData.GrupId,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    // Success handler
+                    console.log(response);
+                    window.location.href = '/Grup/Gruplar'; // Redirect on success
+                },
+                error: function(error) {
+                    // Error handler
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+
 
 <a href="@Url.Action("Gruplar")" class="btn btn-secondary mt-3">Geri</a>

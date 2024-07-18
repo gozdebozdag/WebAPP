@@ -57,10 +57,13 @@ namespace DemoMvc.Controllers
 
         [HttpPost]
         [Route("Grup/GrupDuzenle/{id}")]
-        public async Task<IActionResult> GrupDuzenle(UrunGruplari grup,int id)
+        public async Task<IActionResult> GrupDuzenle([FromBody] UrunGruplari grup, int id)
         {
             if (ModelState.IsValid)
             {
+                // `grup.GrupId`'yi `id` parametresi ile eşleştiriyoruz
+                grup.GrupId = id;
+
                 var success = await _apiService.UpdateGrupAsync(grup);
                 if (success)
                 {
@@ -70,6 +73,8 @@ namespace DemoMvc.Controllers
             }
             return View(grup);
         }
+
+
 
         public async Task<IActionResult> GrupSil(int id)
         {
