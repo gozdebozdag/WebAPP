@@ -2,17 +2,9 @@
 @model DemoApi.Models.Markalar
 
 <h1>Marka Düzenle</h1>
-
-<form asp-action="MarkaDuzenle" method="post">
+<form id="markaDuzenleForm">
+    <input type="hidden" id="MarkaId" name="MarkaId" value="@Model.MarkaId" />
     <table class="table">
-        <tr>
-            <td>
-                <label for="MarkaId">Marka ID:</label>
-            </td>
-            <td>
-                <input type="number" id="MarkaId" name="MarkaId" value="@Model.MarkaId" class="form-control" />
-            </td>
-        </tr>
         <tr>
             <td>
                 <label for="Marka">Marka:</label>
@@ -20,6 +12,7 @@
             <td>
                 <input type="text" id="Marka" name="Marka" value="@Model.Marka" class="form-control" />
             </td>
+        </tr>
         <tr>
             <td colspan="2" class="text-center">
                 <button type="submit" class="btn btn-primary">Kaydet</button>
@@ -28,4 +21,36 @@
     </table>
 </form>
 
-<a href="@Url.Action("Markalar")" class="btn btn-secondary mt-3">Geri</a>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#markaDuzenleForm').on('submit', function (event) {
+            event.preventDefault();
+
+            var formData = {
+                MarkaId: $('#MarkaId').val(),
+                Marka: $('#Marka').val()
+            };
+
+            $.ajax({
+                url: '/Marka/MarkaDuzenle/' + formData.MarkaId,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    // Success handler
+                    console.log(response);
+                    window.location.href = '/Marka/Markalar'; // Redirect on success
+                },
+                error: function (error) {
+                    // Error handler
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<a href="@Url.Action("Gruplar")" class="btn btn-secondary mt-3">Geri</a>

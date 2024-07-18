@@ -53,10 +53,12 @@ namespace DemoMvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MarkaDuzenle(Markalar marka)
+        [Route("Marka/MarkaDuzenle/{id}")]
+        public async Task<IActionResult> MarkaDuzenle([FromBody]Markalar marka,int id)
         {
             if (ModelState.IsValid)
             {
+                marka.MarkaId = id;
                 var success = await _apiService.UpdateBrandAsync(marka);
                 if (success)
                 {

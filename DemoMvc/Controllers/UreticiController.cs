@@ -53,10 +53,12 @@ namespace DemoMvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UreticiDuzenle(UrunUretici uretici)
+        [Route("Uretici/UreticiDuzenle/{id}")]
+        public async Task<IActionResult> UreticiDuzenle([FromBody]UrunUretici uretici,int id)
         {
             if (ModelState.IsValid)
             {
+                uretici.UreticiId = id;
                 var success = await _apiService.UpdateUreticiAsync(uretici);
                 if (success)
                 {
