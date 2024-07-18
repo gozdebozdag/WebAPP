@@ -47,7 +47,7 @@ namespace DemoApi.Controllers
         [HttpPut("UpdateBrand")]
         public ActionResult UpdateBrand(Markalar marka)
         {
-            _markaService.AddBrand(marka);
+            _markaService.UpdateBrand(marka);
             return Ok(new { message = "Product updated successfully" });
         }
 

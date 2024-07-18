@@ -56,7 +56,8 @@ namespace DemoMvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GrupDuzenle(UrunGruplari grup)
+        [Route("Grup/GrupDuzenle/{id}")]
+        public async Task<IActionResult> GrupDuzenle(UrunGruplari grup,int id)
         {
             if (ModelState.IsValid)
             {

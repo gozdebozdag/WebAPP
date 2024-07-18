@@ -18,8 +18,8 @@ namespace DemoApi.Services
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                var query = @"INSERT INTO Markalar (MarkaId, Marka) 
-                              VALUES (@MarkaId, @Marka)";
+                var query = @"INSERT INTO Markalar (Marka) 
+                              VALUES (@Marka)";
                 con.Execute(query, marka);
             }
         }
@@ -52,8 +52,7 @@ namespace DemoApi.Services
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {
-                var query = @"UPDATE Markalar SET MarkaId = @MarkaId, Marka = @Marka
-                              WHERE MarkaId = @MarkaId";
+                var query = @"UPDATE Markalar SET Marka = @Marka WHERE MarkaId = @MarkaId";
                 con.Execute(query, marka);
             }
         }

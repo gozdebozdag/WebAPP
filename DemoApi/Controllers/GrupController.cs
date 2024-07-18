@@ -30,7 +30,7 @@ namespace DemoApi.Controllers
             return Json(gruplar);
         }
 
-        [HttpGet("GetGrups/{id}")]
+        [HttpGet("GetGrupById/{id}")]
         public ActionResult GetGrupById(int id)
         {
            
