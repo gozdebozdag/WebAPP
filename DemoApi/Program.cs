@@ -12,6 +12,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IMarkaService, MarkaService>();
 builder.Services.AddScoped<IGrupService, GrupService>();
 builder.Services.AddScoped<IUreticiService, UreticiService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
