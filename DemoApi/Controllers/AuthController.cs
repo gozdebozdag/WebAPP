@@ -1,7 +1,10 @@
-﻿using DemoApi.Models;
+﻿using DemoApi.Context;
+using DemoApi.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,30 +15,38 @@ namespace DemoApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static User user = new User();
         private readonly IConfiguration _configuration;
+        private readonly DemoDbContext _context;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, DemoDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost("register")]
-        public ActionResult<User> Register(UserDto request)
+        public async Task<ActionResult<User>> Register(UserDto request)
         {
-            string PasswordHash
-                = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            
 
-            user.Username = request.Username;
-            user.PasswordHash = PasswordHash;
+            var user = new User
+            {
+                Username = request.Username,
+                Email=request.Email,
+                PasswordHash = request.Password
+            };
+
+            _context.User.Add(user);
+            await _context.SaveChangesAsync();
 
             return Ok(user);
         }
 
         [HttpPost("login")]
-        public ActionResult<User> Login(UserDto request)
+        public async Task<ActionResult<string>> Login(UserDto request)
         {
-            if (user.Username != request.Username)
+            var user = await _context.User.FirstOrDefaultAsync(u => u.Username == request.Username);
+            if (user == null)
             {
                 return BadRequest("User not found");
             }
@@ -44,6 +55,7 @@ namespace DemoApi.Controllers
             {
                 return BadRequest("Wrong Password");
             }
+
             string token = CreateToken(user);
             return Ok(token);
         }

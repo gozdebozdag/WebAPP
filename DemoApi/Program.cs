@@ -1,4 +1,6 @@
+using DemoApi.Context;
 using DemoApi.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,12 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IMarkaService, MarkaService>();
 builder.Services.AddScoped<IGrupService, GrupService>();
 builder.Services.AddScoped<IUreticiService, UreticiService>();
+builder.Services.AddDbContext<DemoDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "DemoApi", Version = "v1" });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
