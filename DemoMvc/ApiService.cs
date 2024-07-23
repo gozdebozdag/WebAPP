@@ -9,6 +9,7 @@ using DemoMvc.Models;
 using Newtonsoft.Json;
 using Markalar = DemoApi.Models.Markalar;
 using UrunUretici = DemoApi.Models.UrunUretici;
+using UserDto = DemoMvc.Models.UserDto;
 
 public class ApiServices
 {
@@ -215,4 +216,29 @@ public class ApiServices
         response.EnsureSuccessStatusCode();
     }
 
+    /*---------------------- Auth ------------*/
+    public async Task<User> RegisterAsync(UserDto userDto)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/Auth/register", content);
+        response.EnsureSuccessStatusCode();
+
+        var jsonString = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<User>(jsonString);
+    }
+
+    public async Task<string> LoginAsync(UserDto userDto)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/Auth/login", content);
+        response.EnsureSuccessStatusCode();
+
+        var token = await response.Content.ReadAsStringAsync();
+        return token;
+    }
+
+    internal async Task RegisterAsync(DemoApi.Models.UserDto userDto)
+    {
+        throw new NotImplementedException();
+    }
 }

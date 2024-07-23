@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoMvc.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DemoMvc.Controllers
 {
@@ -11,19 +12,50 @@ namespace DemoMvc.Controllers
             _apiService = apiService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Register()
         {
             return View();
         }
 
-        //public async Task<IActionResult> Login()
-        //{
-           
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Register(UserDto userDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _apiService.RegisterAsync(userDto);
+                if (user != null)
+                {
+                    return RedirectToAction("Login");
+                }
 
-        //public async Task<IActionResult> Register(int id)
-        //{
-           
-        //}
+                ModelState.AddModelError(string.Empty, "Kayıt başarısız.");
+            }
+            return View(userDto);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserDto userDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await _apiService.LoginAsync(userDto);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    // Giriş başarılı, token'ı saklayın
+                    HttpContext.Session.SetString("JWTToken", token);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
+            }
+            return View(userDto);
+        }
     }
 }
