@@ -217,28 +217,23 @@ public class ApiServices
     }
 
     /*---------------------- Auth ------------*/
-    public async Task<User> RegisterAsync(UserDto userDto)
+    public async Task<DemoMvc.Models.User> RegisterAsync(UserDto userDto)
     {
         var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync("api/Auth/register", content);
+        var response = await _httpClient.PostAsync($"api/Auth/register", content);
         response.EnsureSuccessStatusCode();
 
         var jsonString = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<User>(jsonString);
+        return JsonConvert.DeserializeObject<DemoMvc.Models.User>(jsonString);
     }
 
     public async Task<string> LoginAsync(UserDto userDto)
     {
         var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync("api/Auth/login", content);
+        var response = await _httpClient.PostAsync($"api/Auth/login", content);
         response.EnsureSuccessStatusCode();
 
         var token = await response.Content.ReadAsStringAsync();
         return token;
-    }
-
-    internal async Task RegisterAsync(DemoApi.Models.UserDto userDto)
-    {
-        throw new NotImplementedException();
     }
 }

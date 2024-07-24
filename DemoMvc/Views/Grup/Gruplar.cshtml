@@ -1,36 +1,41 @@
 ﻿@model List<DemoApi.Models.UrunGruplari>
 
+@{
+    ViewBag.Title = "Gruplar Listesi";
+}
+
 <h2>Gruplar</h2>
 
-
-
-<table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>GrupId</th>
-            <th>Grup</th>
-            <th scope="col">Güncelle</th>
-            <th scope="col">Sil</th>
-            <th scope="col">Detay</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var grup in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
-                <td>@grup.GrupId</td>
-                <td>@grup.Grup</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("GrupDuzenle", "Grup", new { id = grup.GrupId })">Güncelle</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("GrupSil", "Grup", new { id = grup.GrupId })">Sil</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("GrupDetay", "Grup", new { id = grup.GrupId })">Detay</a>
-                </td>
+                <th scope="col">Grup ID</th>
+                <th scope="col">Grup Adı</th>
+                <th scope="col">Güncelle</th>
+                <th scope="col">Sil</th>
+                <th scope="col">Detay</th>
             </tr>
-        }
-    </tbody>
-</table>
-<a class="btn btn-primary mb-3" href="@Url.Action("YeniGrup", "Grup")">Yeni Grup Ekle</a>
+        </thead>
+        <tbody>
+            @foreach (var grup in Model)
+            {
+                <tr>
+                    <td>@grup.GrupId</td>
+                    <td>@grup.Grup</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("GrupDuzenle", "Grup", new { id = grup.GrupId })">Güncelle</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("GrupSil", "Grup", new { id = grup.GrupId })">Sil</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="@Url.Action("GrupDetay", "Grup", new { id = grup.GrupId })">Detay</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a class="btn btn-success mb-3" href="@Url.Action("YeniGrup", "Grup")">Yeni Grup Ekle</a>
