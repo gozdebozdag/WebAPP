@@ -11,6 +11,7 @@ namespace DemoApi.Controllers
     [ApiController]
     public class GrupController : Controller
     {
+
         private readonly string SqlStr = "Data Source=192.168.1.17;Persist Security Info=True;Initial Catalog=Gozde;User ID=sefa;Password=sefa123;Connection Timeout=300";
         private readonly ILogger<GrupController> _logger;
 
