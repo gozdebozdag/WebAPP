@@ -38,13 +38,20 @@ namespace DemoMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _apiService.RegisterAsync(userDto);
-                if (user != null)
+                try
                 {
-                    return RedirectToAction("Login");
-                }
+                    var user = await _apiService.RegisterAsync(userDto);
+                    if (user != null)
+                    {
+                        return Redirect("/");
+                    }
 
-                ModelState.AddModelError(string.Empty, "Kayıt başarısız.");
+                    ModelState.AddModelError(string.Empty, "Kayıt başarısız.");
+                }
+                catch (HttpRequestException ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Kayıt işlemi sırasında bir hata oluştu.");
+                }
             }
             return View(userDto);
         }

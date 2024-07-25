@@ -219,12 +219,17 @@ public class ApiServices
     /*---------------------- Auth ------------*/
     public async Task<DemoMvc.Models.User> RegisterAsync(UserDto userDto)
     {
-        var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync($"api/Auth/register", content);
-        response.EnsureSuccessStatusCode();
+        var jsonContent = JsonConvert.SerializeObject(userDto);
+        var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-        var jsonString = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<DemoMvc.Models.User>(jsonString);
+        var response = await _httpClient.PostAsync("api/auth/register", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<DemoMvc.Models.User>(responseData);
+        }
+        return null;
     }
 
     public async Task<string> LoginAsync(UserDto userDto)
