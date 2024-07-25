@@ -1,5 +1,9 @@
 ﻿using DemoMvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http.Json;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace DemoMvc.Controllers
 {
@@ -10,6 +14,17 @@ namespace DemoMvc.Controllers
         public AuthController(ApiServices apiService)
         {
             _apiService = apiService;
+        }
+        public IActionResult Index()
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login");
+            }
+
+            ViewBag.Username = username;
+            return View();
         }
 
         [HttpGet]
@@ -34,7 +49,6 @@ namespace DemoMvc.Controllers
             return View(userDto);
         }
 
-        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -43,19 +57,27 @@ namespace DemoMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserDto userDto)
         {
-            if (ModelState.IsValid)
-            {
-                var token = await _apiService.LoginAsync(userDto);
-                if (!string.IsNullOrEmpty(token))
-                {
-                    // Giriş başarılı, token'ı saklayın
-                    HttpContext.Session.SetString("JWTToken", token);
-                    return RedirectToAction("Index", "Home");
-                }
+            var client = new HttpClient();
+            var response = await client.PostAsync("https://localhost:7271/api/Auth/Login?Username="+userDto.Username+"&Password="+userDto.Password, new StringContent(string.Empty));
 
-                ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, $"Error: {response.StatusCode} - {errorContent}");
+                return View(userDto);
             }
+
+            var responseData = await response.Content.ReadFromJsonAsync<LoginResponse>();
+
+            if (responseData != null)
+            {
+                HttpContext.Session.SetString("Username", responseData.Username);
+                return Redirect("/");
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(userDto);
         }
     }
 }
+

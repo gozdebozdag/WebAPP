@@ -30,7 +30,7 @@ namespace DemoApi.Controllers
             {
                 Username = request.Username,
                 Email = request.Email,
-                PasswordHash = request.Password // Hash'leme işlemi yapmıyoruz
+                PasswordHash = request.Password 
             };
 
             _context.User.Add(user);
@@ -40,21 +40,21 @@ namespace DemoApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserDto request)
+        public async Task<ActionResult<string>> Login(string Username,string Password)
         {
-            var user = await _context.User.FirstOrDefaultAsync(u => u.Username == request.Username);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.Username == Username);
             if (user == null)
             {
                 return BadRequest("User not found");
             }
 
-            if (user.PasswordHash != request.Password) // Düz metin karşılaştırma
+            if (user.PasswordHash != Password)
             {
                 return BadRequest("Wrong Password");
             }
 
             string token = CreateToken(user);
-            return Ok(token);
+            return Ok(new { Username = user.Username, Token = token });
         }
 
         private string CreateToken(User user)
