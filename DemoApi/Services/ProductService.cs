@@ -14,7 +14,7 @@ namespace DemoApi.Services
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public IEnumerable<Urunler> GetAllProducts()
+        public List<Urunler> GetAllProducts()
         {
             using (IDbConnection con = new SqlConnection(_connectionString))
             {

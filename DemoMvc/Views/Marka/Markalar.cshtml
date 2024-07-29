@@ -1,8 +1,10 @@
-﻿@model List<DemoApi.Models.Markalar>
+﻿@{
+    ViewBag.Title = "Markalar";
+}
 
 <h2>Markalar</h2>
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" id="markaTable">
     <thead class="thead-dark">
         <tr>
             <th scope="col">MarkaId</th>
@@ -13,22 +15,35 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var marka in Model)
-        {
-            <tr>
-                <td>@marka.MarkaId</td>
-                <td>@marka.Marka</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("MarkaDuzenle", "Marka", new { id = marka.MarkaId })">Güncelle</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("MarkaSil", "Marka", new { id = marka.MarkaId })">Sil</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("MarkaDetay", "Marka", new { id = marka.MarkaId })">Detay</a>
-                </td>
-            </tr>
-        }
+        <!-- Veriler buraya AJAX ile yüklenecek -->
     </tbody>
 </table>
 <a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("YeniMarka", "Marka")">Yeni Marka Ekle</a>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '/api/Marka/GetBrand',
+                method: 'GET',
+                success: function (data) {
+                    var tbody = $('#markaTable tbody');
+                    $.each(data, function (i, marka) {
+                        var row = '<tr>' +
+                            '<td>' + marka.markaId + '</td>' +
+                            '<td>' + marka.marka + '</td>' +
+                            '<td><a class="btn btn-primary btn-sm" href="@Url.Action("MarkaDuzenle", "Marka")/' + marka.markaId + '">Güncelle</a></td>' +
+                            '<td><a class="btn btn-primary btn-sm" href="@Url.Action("MarkaSil", "Marka")/' + marka.markaId + '">Sil</a></td>' +
+                            '<td><a class="btn btn-primary btn-sm" href="@Url.Action("MarkaDetay", "Marka")/' + marka.markaId + '">Detay</a></td>' +
+                            '</tr>';
+                        tbody.append(row);
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}

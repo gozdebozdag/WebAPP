@@ -1,4 +1,5 @@
 using DemoApi.Context;
+using DemoApi.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Mvc;
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ApiServices>();
+builder.Services.AddScoped<IMarkaService, MarkaService>();
 builder.Services.AddDbContext<DemoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
