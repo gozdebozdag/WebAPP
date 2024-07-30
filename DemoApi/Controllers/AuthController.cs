@@ -26,6 +26,24 @@ namespace DemoApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
+            var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Username == request.Username);
+
+            if (existingUser != null)
+            {
+                return Conflict("Username already exists.");
+            }
+
+            var existingUserByEmail = await _context.User.FirstOrDefaultAsync(u => u.Email == request.Email);
+
+            if (existingUserByEmail != null)
+            {
+                return Conflict("Email already exists.");
+            }
+
+            if (!IsValidPassword(request.Password))
+            {
+                return BadRequest("Password must be at least 8 characters long and include at least one digit and one uppercase letter.");
+            }
             var user = new User
             {
                 Username = request.Username,
@@ -75,6 +93,19 @@ namespace DemoApi.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private bool IsValidPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password) || password.Length < 8)
+            {
+                return false;
+            }
+
+            bool hasDigit = password.Any(char.IsDigit);
+            bool hasUpperCase = password.Any(char.IsUpper);
+
+            return hasDigit && hasUpperCase;
         }
     }
 }
