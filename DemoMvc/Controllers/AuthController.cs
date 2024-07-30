@@ -43,19 +43,19 @@ namespace DemoMvc.Controllers
                     var user = await _apiService.RegisterAsync(userDto);
                     if (user != null)
                     {
+                        TempData["SuccessMessage"] = "Registration successful!";
                         return Redirect("Login");
                     }
 
-                    // Handle errors returned from API
-                    ModelState.AddModelError(string.Empty, "Kayıt başarısız.");
+                    TempData["ErrorMessage"] = "Registration failed.";
                 }
-                catch (HttpRequestException ex)
+                catch (HttpRequestException)
                 {
-                    ModelState.AddModelError(string.Empty, "Kayıt işlemi sırasında bir hata oluştu.");
+                    TempData["ErrorMessage"] = "An error occurred during registration.";
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, $"Beklenmedik bir hata oluştu: {ex.Message}");
+                    TempData["ErrorMessage"] = $"Unexpected error: {ex.Message}";
                 }
             }
             return View(userDto);

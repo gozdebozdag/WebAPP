@@ -90,3 +90,19 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function () {
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+                toastr.success('@TempData["SuccessMessage"]');
+        </text>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+                toastr.error('@TempData["ErrorMessage"]');
+        </text>
+    }
+            });
+</script>
