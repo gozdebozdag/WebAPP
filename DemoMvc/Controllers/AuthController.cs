@@ -65,13 +65,12 @@ namespace DemoMvc.Controllers
         public async Task<IActionResult> Login(UserDto userDto)
         {
             var client = new HttpClient();
-            var response = await client.PostAsync("https://localhost:7271/api/Auth/Login?Username="+userDto.Username+"&Password="+userDto.Password, new StringContent(string.Empty));
+            var response = await client.PostAsync("https://localhost:7271/api/Auth/Login?Username=" + userDto.Username + "&Password=" + userDto.Password, new StringContent(string.Empty));
 
             if (!response.IsSuccessStatusCode)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, $"Error: {response.StatusCode} - {errorContent}");
-                return View(userDto);
+                return StatusCode((int)response.StatusCode, new { error = $"Error: {response.StatusCode} - {errorContent}" });
             }
 
             var responseData = await response.Content.ReadFromJsonAsync<LoginResponse>();
@@ -79,11 +78,10 @@ namespace DemoMvc.Controllers
             if (responseData != null)
             {
                 HttpContext.Session.SetString("Username", responseData.Username);
-                return Redirect("/");
+                return Json(new { success = true });
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return View(userDto);
+            return Json(new { success = false, error = "Invalid login attempt." });
         }
     }
 }
