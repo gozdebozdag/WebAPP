@@ -55,23 +55,30 @@
                     <div class="card-body px-4 py-5 px-md-5">
                         <form action="/Auth/Register" method="post">
 
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <p>@error.ErrorMessage</p>
+                                    }
+                                </div>
+                            }
+
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input asp-for="Username" id="form3Example3" class="form-control" />
                                 <label class="form-label" for="form3Example3">Username</label>
                             </div>
 
-                            <!-- Email input -->
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input asp-for="Email" id="form3Example3" class="form-control" />
                                 <label class="form-label" for="form3Example3">Email address</label>
                             </div>
 
-                            <!-- Password input -->
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input asp-for="Password" type="password" id="form3Example4" class="form-control" />
                                 <label class="form-label" for="form3Example4">Password</label>
                             </div>
-                            <!-- Submit button -->
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
                                 Sign up
                             </button>

@@ -43,14 +43,19 @@ namespace DemoMvc.Controllers
                     var user = await _apiService.RegisterAsync(userDto);
                     if (user != null)
                     {
-                        return Redirect("/");
+                        return Redirect("Login");
                     }
 
+                    // Handle errors returned from API
                     ModelState.AddModelError(string.Empty, "Kayıt başarısız.");
                 }
                 catch (HttpRequestException ex)
                 {
                     ModelState.AddModelError(string.Empty, "Kayıt işlemi sırasında bir hata oluştu.");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, $"Beklenmedik bir hata oluştu: {ex.Message}");
                 }
             }
             return View(userDto);
