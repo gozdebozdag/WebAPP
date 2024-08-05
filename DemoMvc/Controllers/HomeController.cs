@@ -4,22 +4,39 @@ using System.Diagnostics;
 using DemoApi.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Data;
+using Dapper;
+using System.Data.SqlClient;
+using Markalar = DemoApi.Models.Markalar;
 
 namespace DemoMvc.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ApiServices _apiService;
+        private readonly string _connectionString;
 
-        public HomeController(ApiServices apiService)
+        public HomeController(IConfiguration configuration,ApiServices apiService)
         {
             _apiService = apiService;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-
         public async Task<IActionResult> Urunler()
         {
-
             List<Urunler> urunler = await _apiService.GetProducts();
+
+            IEnumerable<Markalar> markalar;
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                var query = "SELECT MarkaId, Marka FROM Markalar;";
+                markalar = await db.QueryAsync<Markalar>(query);
+            }
+
+            foreach (var urun in urunler)
+            {
+                urun.Marka = markalar.FirstOrDefault(m => m.MarkaId == urun.MarkaId)?.Marka;
+            }
+
             return View(urunler);
         }
         public async Task<IActionResult> UrunDetay(int id)

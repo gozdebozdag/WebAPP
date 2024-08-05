@@ -10,6 +10,6 @@
         public string UrunAdi { get; set; }
         public float Kdv { get; set; }
         public bool AktifMi { get; set; }
-        
+        public string? Marka {  get; set; }
     }
 }
