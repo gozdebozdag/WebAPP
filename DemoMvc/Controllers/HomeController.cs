@@ -39,7 +39,26 @@ namespace DemoMvc.Controllers
         }
         public async Task<IActionResult> UrunDetay(int id)
         {
-            Urunler urun = await _apiService.GetProductByIdAsync(id);
+            Urunler urun;
+
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                SELECT u.UrunId, u.UrunAdi, u.MarkaId, m.Marka, ug.Grup, uu.Uretici, u.UrunKodu
+                FROM Urunler u
+                INNER JOIN Markalar m ON u.MarkaId = m.MarkaId
+                INNER JOIN UrunGruplari ug ON u.GrupId = ug.GrupId
+                INNER JOIN UrunUretici uu ON u.UreticiId = uu.UreticiId
+                WHERE u.UrunId = @UrunId;";
+
+                urun = await db.QueryFirstOrDefaultAsync<Urunler>(query, new { UrunId = id });
+            }
+
+            if (urun == null)
+            {
+                return NotFound();
+            }
+
             return View(urun);
         }
 

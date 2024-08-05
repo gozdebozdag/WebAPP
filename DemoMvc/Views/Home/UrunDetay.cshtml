@@ -1,12 +1,88 @@
 ﻿@using DemoApi.Models
 @model Urunler
 
-<h1>Ürün Detayları</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-<p>ID: @Model.UrunId</p>
-<p>İsim: @Model.UrunAdi</p>
-<p>Uretici: @Model.UreticiId</p>
-<p>Marka: @Model.MarkaId</p>
-<p>Grup: @Model.GrupId</p>
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top:70px;
+            margin-bottom:70px;
+            display: flex;
+            flex-direction: column;
+        }
 
-<a href="@Url.Action("Urunler")">Geri</a>
+        h1 {
+            color: #333;
+        }
+
+        .product-details {
+            margin-bottom: 20px;
+        }
+
+        .detail {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .detail:last-child {
+                border-bottom: none;
+            }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            float: right;
+            width: 70px;
+        }
+
+            .back-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ürün Detayları</h1>
+        <div class="product-details">
+            <div class="detail">
+                <strong>ID:</strong> @Model.UrunId
+            </div>
+            <div class="detail">
+                <strong>İsim:</strong> @Model.UrunAdi
+            </div>
+            <div class="detail">
+                <strong>Üretici:</strong> @Model.Uretici
+            </div>
+            <div class="detail">
+                <strong>Marka:</strong> @Model.Marka
+            </div>
+            <div class="detail">
+                <strong>Grup:</strong> @Model.Grup
+            </div>
+        </div>
+        <a class="back-button" href="@Url.Action("Urunler")">Geri</a>
+    </div>
+</body>
+</html>

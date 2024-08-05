@@ -1,99 +1,192 @@
 ﻿@using DemoApi.Models
 @model DemoApi.Models.Urunler
 
-<h1>Ürün Düzenle</h1>
-<form id="urunDuzenleForm">
-    <input type="hidden" id="UrunId" name="UrunId" value="@Model.UrunId" />
-    <table class="table">
-        <tr>
-            <td>
-                <label for="UrunAdi">Ürün:</label>
-            </td>
-            <td>
-                <input type="text" id="UrunAdi" name="UrunAdi" value="@Model.UrunAdi" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="UrunKodu">Urun Kodu:</label>
-            </td>
-            <td>
-                <input type="text" id="UrunKodu" name="UrunKodu" value="@Model.UrunKodu" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="UreticiId">Uretici: </label>
-            </td>
-            <td>
-                <input type="text" id="UreticiId" name="UreticiId" value="@Model.UreticiId" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="GrupId">Grup: </label>
-            </td>
-            <td>
-                <input type="text" id="GrupId" name="GrupId" value="@Model.GrupId" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="Kdv">Kdv: </label>
-            </td>
-            <td>
-                <input type="text" id="Kdv" name="Kdv" value="@Model.Kdv" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="MarkaId">Marka: </label>
-            </td>
-            <td>
-                <input type="text" id="MarkaId" name="MarkaId" value="@Model.MarkaId" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="text-center">
-                <button type="submit" class="btn btn-primary">Kaydet</button>
-            </td>
-        </tr>
-    </table>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Düzenle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-<a href="@Url.Action("Urunler")" class="btn btn-secondary mt-3">Geri</a>
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+            margin-bottom: 70px;
+        }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#urunDuzenleForm').on('submit', function (event) {
-            event.preventDefault();
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-            var formData = {
-                UrunId: $('#UrunId').val(),
-                UrunAdi: $('#UrunAdi').val(),
-                UrunKodu: $('#UrunKodu').val(),
-                UreticiId: $('#UreticiId').val(),
-                MarkaId: $('#MarkaId').val(),
-                GrupId: $('#GrupId').val(),
-                Kdv: $('#Kdv').val()
-            };
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-            $.ajax({
-                url: '/Home/UrunDuzenle/' + formData.UrunId,
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function (response) {
-                    // Success handler
-                    console.log(response);
-                    window.location.href = '/Home/Urunler'; // Redirect on success
-                },
-                error: function (error) {
-                    // Error handler
-                    console.error(error);
-                }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ürün Düzenle</h1>
+        <form id="urunDuzenleForm">
+            <input type="hidden" id="UrunId" name="UrunId" value="@Model.UrunId" />
+            <table class="table">
+                <tr>
+                    <td>
+                        <label for="UrunAdi">Ürün:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="UrunAdi" name="UrunAdi" value="@Model.UrunAdi" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="UrunKodu">Ürün Kodu:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="UrunKodu" name="UrunKodu" value="@Model.UrunKodu" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="UreticiId">Üretici:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="UreticiId" name="UreticiId" value="@Model.Uretici" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="GrupId">Grup:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="GrupId" name="GrupId" value="@Model.Grup" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="Kdv">KDV:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="Kdv" name="Kdv" value="@Model.Kdv" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="MarkaId">Marka:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="MarkaId" name="MarkaId" value="@Model.Marka" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <button type="submit" class="btn">Kaydet</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <a href="@Url.Action("Urunler")" class="btn btn-secondary mt-3">Geri</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#urunDuzenleForm').on('submit', function (event) {
+                event.preventDefault();
+
+                var formData = {
+                    UrunId: $('#UrunId').val(),
+                    UrunAdi: $('#UrunAdi').val(),
+                    UrunKodu: $('#UrunKodu').val(),
+                    UreticiId: $('#UreticiId').val(),
+                    MarkaId: $('#MarkaId').val(),
+                    GrupId: $('#GrupId').val(),
+                    Kdv: $('#Kdv').val()
+                };
+
+                $.ajax({
+                    url: '/Home/UrunDuzenle/' + formData.UrunId,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        console.log(response);
+                        window.location.href = '/Home/Urunler';
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+</body>
+</html>
