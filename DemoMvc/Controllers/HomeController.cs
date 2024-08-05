@@ -23,18 +23,16 @@ namespace DemoMvc.Controllers
         }
         public async Task<IActionResult> Urunler()
         {
-            List<Urunler> urunler = await _apiService.GetProducts();
-
-            IEnumerable<Markalar> markalar;
+            IEnumerable<Urunler> urunler;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var query = "SELECT MarkaId, Marka FROM Markalar;";
-                markalar = await db.QueryAsync<Markalar>(query);
-            }
-
-            foreach (var urun in urunler)
-            {
-                urun.Marka = markalar.FirstOrDefault(m => m.MarkaId == urun.MarkaId)?.Marka;
+                var query = @"
+                SELECT u.UrunId, u.UrunAdi, u.MarkaId, m.Marka,ug.Grup,uu.Uretici,u.UrunKodu
+                FROM Urunler u
+                INNER JOIN Markalar m ON u.MarkaId = m.MarkaId
+                INNER JOIN UrunGruplari ug on u.GrupId=ug.GrupId
+                INNER JOIN UrunUretici uu on u.UreticiId=uu.UreticiId;";
+                urunler = await db.QueryAsync<Urunler>(query);
             }
 
             return View(urunler);

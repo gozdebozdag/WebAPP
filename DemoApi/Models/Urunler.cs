@@ -11,5 +11,7 @@
         public float Kdv { get; set; }
         public bool AktifMi { get; set; }
         public string? Marka {  get; set; }
+        public string? Uretici { get; set; }
+        public string? Grup { get; set; }
     }
 }
