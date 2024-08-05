@@ -1,6 +1,91 @@
 ﻿@using DemoApi.Models
 @model DemoApi.Models.UrunUretici
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
 
+    .container {
+        width: 60%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 30px;
+        margin-bottom: 70px;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        td:last-child {
+            border-bottom: none;
+        }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+</style>
+<body>
+    <div class="container">
 <h1>Üretici Düzenle</h1>
 <form id="ureticiDuzenleForm">
     <input type="hidden" id="UreticiId" name="UreticiId" value="@Model.UreticiId" />
@@ -20,7 +105,8 @@
         </tr>
     </table>
 </form>
-
+<a href="@Url.Action("Ureticiler")" class="btn btn-secondary mt-3">Geri</a>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -38,17 +124,15 @@
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function (response) {
-                    // Success handler
                     console.log(response);
-                    window.location.href = '/Uretici/Ureticiler'; // Redirect on success
+                    window.location.href = '/Uretici/Ureticiler'; 
                 },
                 error: function (error) {
-                    // Error handler
                     console.error(error);
                 }
             });
         });
     });
 </script>
+</body>
 
-<a href="@Url.Action("Ureticiler")" class="btn btn-secondary mt-3">Geri</a>
