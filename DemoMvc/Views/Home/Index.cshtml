@@ -23,26 +23,55 @@
             background-color: #0056b3;
             border-color: #004085;
         }
+
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 78.6vh;
+        overflow: hidden;
+    }
+
+    .carousel-inner {
+        height: 100%;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+    }
+
+    .carousel-buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .carousel-buttons .btn {
+            margin: 5px;
+        }
 </style>
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+
+<div id="carouselExampleSlidesOnly" class="carousel slide carousel-container" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="~/images/" class="d-block w-100" alt="...">
+            <img src="~/images/slide2.png" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
+            <img src="~/images/slide1.png" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
+            <img src="~/images/slide3.png" class="d-block w-100" alt="...">
         </div>
     </div>
-</div>
-
-
- <div>
-<br>
-    <a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("Urunler", "Home")">Ürünler</a>
-    <a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("Gruplar", "Grup")">Gruplar</a>
-    <a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("Markalar", "Marka")">Markalar</a>
-    <a class="btn btn-primary btn-lg mt-4" style="margin:5px;" href="@Url.Action("Ureticiler", "Uretici")">Üreticiler</a>
+    <div class="carousel-buttons">
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Ureticiler", "Uretici")">Üreticiler</a>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Markalar", "Marka")">Markalar</a>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Urunler", "Home")">Ürünler</a>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Gruplar", "Grup")">Gruplar</a>
+    </div>
 </div>
